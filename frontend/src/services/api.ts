@@ -1,7 +1,17 @@
 import axios from 'axios';
 
+const getBaseURL = () => {
+  // For production, use environment variable or API URL from import.meta.env
+  const apiUrl = (import.meta as any).env.VITE_API_URL;
+  if (apiUrl) {
+    return apiUrl;
+  }
+  // For development, use relative path with local proxy
+  return '/api';
+};
+
 const API = axios.create({
-  baseURL: '/api',
+  baseURL: getBaseURL(),
 });
 
 API.interceptors.request.use((config) => {
@@ -11,6 +21,17 @@ API.interceptors.request.use((config) => {
   }
   return config;
 });
+
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      window.location.href = '/';
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const authApi = {
   login: (email: string, password: string) =>

@@ -7,15 +7,11 @@ export const config = {
   port: parseInt(process.env.PORT || '5000', 10),
   
   database: {
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5432', 10),
-    name: process.env.DB_NAME || 'kitchenpro',
-    user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || 'password',
+    url: process.env.DATABASE_URL,
   },
 
   jwt: {
-    secret: process.env.JWT_SECRET || 'change_me_in_production',
+    secret: process.env.JWT_SECRET || 'change_me_in_production_12345678',
     expiresIn: process.env.JWT_EXPIRE || '7d',
   },
 
@@ -25,7 +21,7 @@ export const config = {
   },
 
   cors: {
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+    origin: process.env.CORS_ORIGIN || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000',
     credentials: true,
   },
 };

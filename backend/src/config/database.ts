@@ -1,20 +1,17 @@
 import { Pool, PoolClient } from 'pg';
 import { config } from './index';
 
-// Support both DATABASE_URL (for Neon) and individual config
 const pool = process.env.DATABASE_URL
   ? new Pool({
       connectionString: process.env.DATABASE_URL,
-      ssl: {
-        rejectUnauthorized: false,
-      },
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
     })
   : new Pool({
-      host: config.database.host,
-      port: config.database.port,
-      database: config.database.name,
-      user: config.database.user,
-      password: config.database.password,
+      host: 'localhost',
+      port: 5432,
+      database: 'kitchenpro',
+      user: 'postgres',
+      password: 'password',
     });
 
 pool.on('error', (err: Error) => {
