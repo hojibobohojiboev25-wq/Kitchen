@@ -2,6 +2,13 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "env": {
-    "NODE_ENV": "production"
-  }
+    "NODE_ENV": "production",
+    "VITE_API_URL": "https://your-backend-url.vercel.app/api"
+  },
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
+  ]
 }

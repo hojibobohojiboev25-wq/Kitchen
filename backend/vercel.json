@@ -5,17 +5,11 @@
   "env": {
     "NODE_ENV": "production"
   },
-  "functions": {
-    "src/index.ts": {
-      "runtime": "nodejs18.x",
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  },
-  "routes": [
+  "public": false,
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "src/index.ts"
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
     }
   ]
 }
