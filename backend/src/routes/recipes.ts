@@ -9,7 +9,6 @@ router.use(authMiddleware);
 
 // GET routes
 router.get('/', recipeController.getAllRecipes);
-router.get('/low-stock', recipeController.getAllRecipes);
 router.get('/:id', recipeController.getRecipeById);
 
 // POST routes (require admin or manager)

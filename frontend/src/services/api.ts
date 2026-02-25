@@ -12,6 +12,14 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
+export const authApi = {
+  login: (email: string, password: string) =>
+    API.post('/auth/login', { email, password }),
+  register: (email: string, password: string, name: string) =>
+    API.post('/auth/register', { email, password, name }),
+  verify: () => API.get('/auth/verify'),
+};
+
 export const recipeApi = {
   getAll: () => API.get('/recipes'),
   getById: (id: string) => API.get(`/recipes/${id}`),
@@ -51,3 +59,4 @@ export const analyticsApi = {
     API.get('/analytics/sales/report', { params: { days } }),
   getInventoryValue: () => API.get('/analytics/inventory/value'),
 };
+

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store';
+import { authApi } from '../services/api';
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -17,16 +18,11 @@ export const Login: React.FC = () => {
     setError('');
 
     try {
-      // TODO: Implement actual login API call
-      // const response = await loginApi(email, password);
-      // setToken(response.token);
-      // navigate('/');
-      
-      // For demo purposes
-      setToken('demo_token_' + Date.now());
+      const response = await authApi.login(email, password);
+      setToken(response.data.token);
       navigate('/');
     } catch (err: any) {
-      setError(err.message || 'Ошибка входа');
+      setError(err.response?.data?.error || err.message || 'Ошибка входа');
     } finally {
       setLoading(false);
     }

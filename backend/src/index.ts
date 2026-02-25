@@ -6,6 +6,7 @@ import { initDatabase } from './config/database';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 
 // Routes
+import authRouter from './routes/auth';
 import recipesRouter from './routes/recipes';
 import inventoryRouter from './routes/inventory';
 import ordersRouter from './routes/orders';
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(cors(config.cors));
 
 // Routes
+app.use('/api/auth', authRouter);
 app.use('/api/recipes', recipesRouter);
 app.use('/api/inventory', inventoryRouter);
 app.use('/api/orders', ordersRouter);
