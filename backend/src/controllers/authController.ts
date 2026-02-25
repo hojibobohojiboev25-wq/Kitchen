@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { generateToken } from '../utils/jwt';
-import bcrypt from 'bcryptjs';
 
 // Mock user database - in production, this should be in PostgreSQL
 const mockUsers = [
@@ -23,11 +22,7 @@ export const login = async (req: Request, res: Response) => {
 
     // Mock validation - for demo
     if (email === 'demo@kitchenpro.com' && password === 'demo123') {
-      const token = generateToken({
-        userId: '1',
-        email: 'demo@kitchenpro.com',
-        role: 'admin'
-      });
+      const token = generateToken('1', 'admin');
 
       return res.json({
         token,
@@ -55,11 +50,7 @@ export const register = async (req: Request, res: Response) => {
     }
 
     // For now, just return the same demo user
-    const token = generateToken({
-      userId: '1',
-      email,
-      role: 'user'
-    });
+    const token = generateToken('1', 'user');
 
     return res.status(201).json({
       token,
